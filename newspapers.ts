@@ -50,6 +50,7 @@ fs.readdir(directoryPath, (err: NodeJS.ErrnoException | null, files: string[] | 
     console.log('Filtered Files:', filteredFiles);
     // Add your resolve function or additional processing here if needed
 });
+  });
 
 export const clearDirectory = async (dir: string) => {
   const files = await getDirectoryContents(dir);
