@@ -37,21 +37,24 @@ import * as path from 'path';
 // Define the directory path (adjust as necessary)
 const directoryPath = path.join(__dirname, 'newspapers'); // Adjust the path as needed
 
-fs.readdir(directoryPath, (err: NodeJS.ErrnoException | null, files: string[] | undefined) => {
-    if (err) {
-        console.error('Error reading directory:', err);
-        return;
-    }
-    if (!files) {
-        console.error('No files found');
-        return;
-    }
-    const filteredFiles = files.filter((file: string) => file !== 'jpgs' && !file.startsWith('.'));
-    console.log('Filtered Files:', filteredFiles);
-    // Add your resolve function or additional processing here if needed
-}
+// Create a promise to handle asynchronous directory reading
+return new Promise((resolve, reject) => {
+    fs.readdir(directoryPath, (err: NodeJS.ErrnoException | null, files: string[] | undefined) => {
+        if (err) {
+            console.error('Error reading directory:', err);
+            reject(err);
+            return;
+        }
+        if (!files) {
+            console.error('No files found');
+            reject('No files found');
+            return;
+        }
+        const filteredFiles = files.filter((file: string) => file !== 'jpgs' && !file.startsWith('.'));
+        console.log('Filtered Files:', filteredFiles);
+        resolve(filteredFiles);
+    });
 });
-  });
 
 export const clearDirectory = async (dir: string) => {
   const files = await getDirectoryContents(dir);
