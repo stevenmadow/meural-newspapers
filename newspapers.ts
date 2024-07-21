@@ -29,7 +29,7 @@ export const getDirectoryContents = async (dir: string): Promise<string[]> => {
    const fs = require('fs');
 const path = require('path');
 
-const directoryPath = path.join(__dirname, 'path/to/directory'); // Adjust the path as needed
+const directoryPath = path.join(__dirname, 'newspapers_files'); // Adjust the path as needed
 
 fs.readdir(directoryPath, (err, files) => {
     if (err) {
