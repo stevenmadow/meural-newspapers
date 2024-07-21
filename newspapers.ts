@@ -49,6 +49,7 @@ fs.readdir(directoryPath, (err: NodeJS.ErrnoException | null, files: string[] | 
     const filteredFiles = files.filter((file: string) => file !== 'jpgs' && !file.startsWith('.'));
     console.log('Filtered Files:', filteredFiles);
     // Add your resolve function or additional processing here if needed
+}
 });
   });
 
