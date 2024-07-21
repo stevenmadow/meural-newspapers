@@ -26,9 +26,23 @@ export const downloadFile = async (url: string, path: string) => {
 
 export const getDirectoryContents = async (dir: string): Promise<string[]> => {
   return new Promise((resolve, reject) => {
-    fs.readdir(dir, (err, files) => {
-      if (err) reject(err);
-      resolve(files.filter(file => file !== 'jpgs' && file.startsWith('.') === false));
+   const fs = require('fs');
+const path = require('path');
+
+const directoryPath = path.join(__dirname, 'path/to/directory'); // Adjust the path as needed
+
+fs.readdir(directoryPath, (err, files) => {
+    if (err) {
+        console.error('Error reading directory:', err);
+        return;
+    }
+    if (!files) {
+        console.error('No files found');
+        return;
+    }
+    const filteredFiles = files.filter(file => file !== 'jpgs' && !file.startsWith('.'));
+    console.log('Filtered Files:', filteredFiles);
+    resolve(filteredFiles);
     });
   });
 };
