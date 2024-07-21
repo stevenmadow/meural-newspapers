@@ -4,7 +4,7 @@ import im from 'imagemagick';
 import path from 'path';
 import pLimit from 'p-limit';
 
-import {logger} from './logger';
+import { logger } from './logger';
 import config from './config.json';
 import newspapers from './newspapers.json';
 
@@ -20,41 +20,29 @@ export const downloadFile = async (url: string, path: string) => {
     await fs.writeFileSync(path, response.data);
   } catch (error: any) {
     // gracefully fail if a file fails to download
-    logger(`Failed: ${error.message}`, {sentiment: 'negative', processLevel: 2});
+    logger(`Failed: ${error.message}`, { sentiment: 'negative', processLevel: 2 });
   }
 };
 
 export const getDirectoryContents = async (dir: string): Promise<string[]> => {
   return new Promise((resolve, reject) => {
-   const fs = require('fs');
-const path = require('path');
-
-const directoryPath = path.join(__dirname, 'newspapers_files'); // Adjust the path as needed
-
-import * as fs from 'fs';
-import * as path from 'path';
-
-// Define the directory path (adjust as necessary)
-const directoryPath = path.join(__dirname, 'newspapers'); // Adjust the path as needed
-
-// Create a promise to handle asynchronous directory reading
-return new Promise((resolve, reject) => {
-    fs.readdir(directoryPath, (err: NodeJS.ErrnoException | null, files: string[] | undefined) => {
-        if (err) {
-            console.error('Error reading directory:', err);
-            reject(err);
-            return;
-        }
-        if (!files) {
-            console.error('No files found');
-            reject('No files found');
-            return;
-        }
-        const filteredFiles = files.filter((file: string) => file !== 'jpgs' && !file.startsWith('.'));
-        console.log('Filtered Files:', filteredFiles);
-        resolve(filteredFiles);
+    fs.readdir(dir, (err: NodeJS.ErrnoException | null, files: string[] | undefined) => {
+      if (err) {
+        console.error('Error reading directory:', err);
+        reject(err);
+        return;
+      }
+      if (!files) {
+        console.error('No files found');
+        reject('No files found');
+        return;
+      }
+      const filteredFiles = files.filter((file: string) => file !== 'jpgs' && !file.startsWith('.'));
+      console.log('Filtered Files:', filteredFiles);
+      resolve(filteredFiles);
     });
-});
+  });
+};
 
 export const clearDirectory = async (dir: string) => {
   const files = await getDirectoryContents(dir);
@@ -82,9 +70,9 @@ export const downloadNewspaperPDFs = async () => {
         )
       )
     );
-
-    await Promise.all(papersToDownload);
   }
+
+  await Promise.all(papersToDownload);
 };
 
 export const getImageProperties = async (file: string): Promise<im.Features> => {
@@ -149,5 +137,5 @@ export const processPdf = async (inputFile: string, convertedFileName: string) =
       await cropImage(convertedFileName, imageWidth, imageWidth * desiredAspectRatio);
     }
   }
-  logger(`Processesd ${convertedFileName}`, {sentiment: 'positive'});
+  logger(`Processed ${convertedFileName}`, { sentiment: 'positive' });
 };
