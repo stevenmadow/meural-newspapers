@@ -85,6 +85,7 @@ import {MeuralClient, MeuralDevice} from './meural';
   }
 
   // Upload all the images to Meural
+ /*
   const jpgs = await getDirectoryContents(`${NEWSPAPAPER_CACHE_PATH}/jpgs`);
 
   for (const jpg of jpgs) {
@@ -106,6 +107,6 @@ import {MeuralClient, MeuralDevice} from './meural';
       logger(`Error adding image: ${e}`, {sentiment: 'negative', processLevel: 2});
     }
   }
-
+*/
   logger('Process complete', {sentiment: 'positive'});
 })();
